@@ -56,7 +56,7 @@ function CatDetails() {
       <p><strong>Description:</strong> {breed.description}</p>
       <p><strong>Age:</strong> {age}</p>
       <a href={breed.wikipedia_url} target="_blank" rel="noopener noreferrer">Wikipedia Link</a>
-      <p>Interested in adopting {name}? Fill out our <a href="/adoption-form">adoption form</a>!</p>
+      <p>Interested in adopting {name}? Fill out our <a href="/AdoptionForm">adoption form</a>!</p>
     </div>
   );
 }
