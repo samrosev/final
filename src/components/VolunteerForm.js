@@ -14,6 +14,7 @@ function VolunteerForm() {
   const[state,setState] = useState()
   const[zip,setZip] = useState()
   const[age,setAge] = useState()
+  const navigate = useNavigate()
 
   const Submit = (e) => {
     e.preventDefault();
