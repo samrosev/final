@@ -2,10 +2,10 @@ import React from 'react';
 import "bootstrap/dist/css/bootstrap.css"; 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Home from './components/Home';
+import Home from './pages/Home';
 import CatDetails from './components/CatDetails';
 import AdoptionForm from './components/AdoptionForm';
-import VolunteerForm from './components/VolunteerForm';
+import VolunteerForm from './pages/VolunteerForm';
 import MyAccount from './components/MyAccount';
 
 import './styles.css';
