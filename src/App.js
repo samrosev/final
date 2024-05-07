@@ -1,25 +1,28 @@
 import React from 'react';
+import "bootstrap/dist/css/bootstrap.css"; 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Home from './components/Home';
-import CatDetails from './components/CatDetails';
-import AdoptionForm from './components/AdoptionForm';
-import VolunteerForm from './components/VolunteerForm';
+import Navbar from './pages/Navbar';
+import Home from './pages/Home';
+import CatDetails from './pages/CatDetails';
+import AdoptionForm from './pages/AdoptionForm';
+import VolunteerForm from './pages/VolunteerForm';
 import './styles.css';
 
-function App() {
+const App = () => {
   return (
+    <div className="App">
     <Router>
-      <div className="App">
+      
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cats/:id" element={<CatDetails />} />
-          <Route path="/adopt" element={<AdoptionForm />} />
-          <Route path="/volunteer" element={<VolunteerForm />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/cats/:id' element={<CatDetails />} />
+          <Route path='/adopt' element={<AdoptionForm />} />
+          <Route path='/volunteer' element={<VolunteerForm />} />
         </Routes>
-      </div>
+      
     </Router>
+    </div>
   );
 }
 
