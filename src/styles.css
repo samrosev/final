@@ -1,0 +1,39 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.navbar {
+  background-color: purple; /* Purple background color */
+  color: #fff; /* White text color */
+  padding: 10px 0; /* Add some padding */
+}
+
+.container {
+  display: flex;
+  justify-content: space-between; /* Align items at the start and end of the container */
+  align-items: center; /* Center items vertically */
+}
+
+.navbar-brand {
+  font-size: 2rem; /* Larger font size for brand */
+  font-weight: bold; /* Bold font weight */
+  text-decoration: none; /* Remove underline from link */
+}
+
+.navbar-nav {
+  list-style: none; /* Remove bullet points from list */
+  display: flex; /* Display list items horizontally */
+}
+
+.nav-item {
+  margin-right: 20px; /* Add some space between nav items */
+}
+
+.nav-link {
+  text-decoration: none; /* Remove underline from link */
+  color: #fff; /* White text color */
+}
+
+.nav-link:hover {
+  text-decoration: underline; /* Add underline on hover */
+}

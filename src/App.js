@@ -1,20 +1,23 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import CatDetails from './components/CatDetails';
 import AdoptionForm from './components/AdoptionForm';
 import VolunteerForm from './components/VolunteerForm';
+import './styles.css';
+
 function App() {
   return (
     <Router>
       <div className="App">
         <Navbar />
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/cats/:id" component={CatDetails} />
-          <Route path="/adopt" component={AdoptionForm} />
-          <Route path="/volunteer" component={VolunteerForm} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/cats/:id" element={<CatDetails />} />
+          <Route path="/adopt" element={<AdoptionForm />} />
+          <Route path="/volunteer" element={<VolunteerForm />} />
+        </Routes>
       </div>
     </Router>
   );
