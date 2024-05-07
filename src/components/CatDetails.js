@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom';
 
 function CatDetails() {
   const { id } = useParams(); // Access the cat ID from the URL params
-  const [breeds, setBreeds] = useState([]);
-  const [selectedBreedIndex, setSelectedBreedIndex] = useState(0);
+  const [breed, setBreed] = useState(null);
+  const [age, setAge] = useState('');
+  const [name, setName] = useState('');
 
   useEffect(() => {
     const url = `https://api.thecatapi.com/v1/breeds`;
@@ -21,7 +22,20 @@ function CatDetails() {
         // Filter to include only breeds with images
         const filteredBreeds = data.filter(breed => breed.image?.url != null);
 
-        setBreeds(filteredBreeds);
+        // Randomly select a breed
+        const randomIndex = Math.floor(Math.random() * filteredBreeds.length);
+        const selectedBreed = filteredBreeds[randomIndex];
+        setBreed(selectedBreed);
+
+        // Randomly select an age
+        const ages = ['Young', 'Adult', 'Elder'];
+        const randomAge = ages[Math.floor(Math.random() * ages.length)];
+        setAge(randomAge);
+
+        // Randomly generate a name
+        const names = ['Fluffy', 'Whiskers', 'Mittens', 'Smokey', 'Leo', 'Luna', 'Simba', 'Felix', 'Max', 'Oreo'];
+        const randomName = names[Math.floor(Math.random() * names.length)];
+        setName(randomName);
       } catch (error) {
         console.error('Error fetching cat breeds:', error);
       }
@@ -30,27 +44,19 @@ function CatDetails() {
     fetchBreeds();
   }, []);
 
-  const handleBreedChange = (event) => {
-    setSelectedBreedIndex(event.target.value);
-  };
-
-  if (breeds.length === 0) {
+  if (!breed) {
     return <div>Loading...</div>;
   }
 
-  const selectedBreed = breeds[selectedBreedIndex];
-
   return (
     <div className="cat-details">
-      <select onChange={handleBreedChange}>
-        {breeds.map((breed, index) => (
-          <option key={index} value={index}>{breed.name}</option>
-        ))}
-      </select>
-      <h2>{selectedBreed.name}</h2>
-      <p><strong>Temperament:</strong> {selectedBreed.temperament}</p>
-      <p><strong>Description:</strong> {selectedBreed.description}</p>
-      <a href={selectedBreed.wikipedia_url} target="_blank" rel="noopener noreferrer">Wikipedia Link</a>
+      <h2>{name}</h2>
+      <h3>Breed: {breed.name}</h3>
+      <p><strong>Temperament:</strong> {breed.temperament}</p>
+      <p><strong>Description:</strong> {breed.description}</p>
+      <p><strong>Age:</strong> {age}</p>
+      <a href={breed.wikipedia_url} target="_blank" rel="noopener noreferrer">Wikipedia Link</a>
+      <p>Interested in adopting {name}? Fill out our <a href="/adoption-form">adoption form</a>!</p>
     </div>
   );
 }
