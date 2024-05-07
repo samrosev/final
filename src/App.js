@@ -1,18 +1,23 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Home from "./components/Home"
-import SingleCat from "./components/CatDetails"
-
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import CatDetails from './components/CatDetails';
+import AdoptionForm from './components/AdoptionForm';
+import VolunteerForm from './components/VolunteerForm';
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/.components" element={<Home />}></Route>
-          <Route path="/.components" element={<SingleCat />}></Route>
-        </Routes>
-      </BrowserRouter>
-    </>
-  )
+    <Router>
+      <div className="App">
+        <Navbar />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/cats/:id" component={CatDetails} />
+          <Route path="/adopt" component={AdoptionForm} />
+          <Route path="/volunteer" component={VolunteerForm} />
+        </Switch>
+      </div>
+    </Router>
+  );
 }
 
-export default App
+export default App;

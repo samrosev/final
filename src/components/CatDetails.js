@@ -1,43 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-const CatDetails = () => {
-  const [catDetails, setCatDetails] = useState(null);
-  const { id } = useParams();
+function CatDetails() {
+  const { id } = useParams(); // Access the cat ID from the URL params
+  const [catInfo, setCatInfo] = useState(null);
 
   useEffect(() => {
-    const fetchCatDetails = async () => {
+    const fetchCatInfo = async () => {
       try {
-        const res = await fetch(`https://api.thecatapi.com/v1/images/search?breed_ids=${id}`);
-        const data = await res.json();
-        setCatDetails(data[0].breeds[0]);
+        const response = await axios.get(`https://api.thecatapi.com/v1/breeds/search?q=${id}`, {
+          headers: {
+            'x-api-key': 'live_KXa2QNkQxWRsCAhx7KrKXyiuKt1uztVEAsLdX7Lw3RU6zCBSvHWCpMVkupo01GOp' 
+          }
+        });
+        if (response.data.length > 0) {
+          setCatInfo(response.data[0]);
+        } else {
+          setCatInfo({ name: 'Unknown', temperament: 'Unknown', description: 'No description available' });
+        }
       } catch (error) {
-        console.error("Error fetching cat details:", error);
+        console.error('Error fetching cat info:', error);
       }
     };
 
-    fetchCatDetails();
+    fetchCatInfo();
   }, [id]);
 
-  if (!catDetails) {
-    return <h2>Loading...</h2>;
+  if (!catInfo) {
+    return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      <h2>{catDetails.name}</h2>
-      <p>
-        <strong>Breed:</strong> {catDetails.name}
-      </p>
-      <p>
-        <strong>Temperament:</strong> {catDetails.temperament}
-      </p>
-      <p>
-        <strong>Description:</strong> {catDetails.description}
-      </p>
-      <Link to="/">Back to Cat List</Link>
+    <div className="cat-details">
+      <h2>{catInfo.name}</h2>
+      <p><strong>Breed:</strong> {catInfo.name}</p>
+      <p><strong>Temperament:</strong> {catInfo.temperament}</p>
+      <p><strong>Description:</strong> {catInfo.description}</p>
     </div>
   );
-};
+}
 
 export default CatDetails;
