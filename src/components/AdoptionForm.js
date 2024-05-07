@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import "bootstrap/dist/css/bootstrap.css"; 
 
 function AdoptionForm({ catName, catAge }) {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
     address: '',
+    city: '',
+    state: '',
+    zip: '',
+    age: '',
     hasPets: false,
     additionalInfo: ''
   });
@@ -16,10 +26,21 @@ function AdoptionForm({ catName, catAge }) {
     }));
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Logic to submit form data
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     console.log(formData);
+    axios.post("http://localhost:8082/addAdoption", formData)
+      .then(result => {
+        console.log(result);
+        navigate('/');
+        alert("Adoption form submitted successfully!");
+      })
+      .catch(err => {
+        console.error('Error submitting adoption form:', err);
+        alert('Error submitting adoption form: ' + err.message);
+      });
   };
 
   return (
@@ -27,12 +48,40 @@ function AdoptionForm({ catName, catAge }) {
       <h2>Adoption Application</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="name">Name:</label>
-          <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} />
+          <label htmlFor="firstName">First Name:</label>
+          <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} required />
+        </div>
+        <div>
+          <label htmlFor="lastName">Last Name:</label>
+          <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} required />
+        </div>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
+        </div>
+        <div>
+          <label htmlFor="phone">Phone:</label>
+          <input type="tel" id="phone" name="phone" value={formData.phone} onChange={handleChange} required />
         </div>
         <div>
           <label htmlFor="address">Address:</label>
-          <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} />
+          <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} required />
+        </div>
+        <div>
+          <label htmlFor="city">City:</label>
+          <input type="text" id="city" name="city" value={formData.city} onChange={handleChange} required />
+        </div>
+        <div>
+          <label htmlFor="state">State:</label>
+          <input type="text" id="state" name="state" value={formData.state} onChange={handleChange} required />
+        </div>
+        <div>
+          <label htmlFor="zip">Zip:</label>
+          <input type="number" id="zip" name="zip" value={formData.zip} onChange={handleChange} required />
+        </div>
+        <div>
+          <label htmlFor="age">Age:</label>
+          <input type="number" id="age" name="age" value={formData.age} onChange={handleChange} required />
         </div>
         <div>
           <label>
@@ -46,7 +95,6 @@ function AdoptionForm({ catName, catAge }) {
         </div>
         <button type="submit">Submit</button>
       </form>
-      <p>You are applying to adopt {catName}, who is {catAge} years old.</p>
     </div>
   );
 }

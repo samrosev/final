@@ -1,7 +1,4 @@
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 .navbar {
   background-color: purple; /* Purple background color */
   color: #fff; /* White text color */
