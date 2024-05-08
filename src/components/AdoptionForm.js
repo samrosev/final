@@ -31,7 +31,7 @@ function AdoptionForm({ catName, catAge }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    axios.post("http://localhost:8082/addAdoption", formData)
+    axios.post("http://localhost:8082/addApp", formData)
       .then(result => {
         console.log(result);
         navigate('/');

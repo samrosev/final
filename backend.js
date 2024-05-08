@@ -201,8 +201,7 @@ app.put("/updateApp/:_id", async (req, res) => {
             "city": req.body.city,
             "state": req.body.state,
             "zip": req.body.zip,
-            "age": req.body.age,
-            "cat": req.body.cat
+            "age": req.body.age
         }
     };
     // Add options if needed, for example { upsert: true } to create a document if it doesn't exist
@@ -221,23 +220,23 @@ app.put("/updateApp/:_id", async (req, res) => {
 });
 
 //delete vol by id
-app.delete("/deleteVol/:_id", async (req, res) => {
+app.delete("/deleteVol/:id", async (req, res) => {
     try {
-        const id = Number(req.params._id);
-        console.log("Product to delete :",id);
+        const id = Number(req.params.phone);
+        console.log("Vol to delete :",id);
 
         await client.connect();
 
-        const query = { id: id };
+        const query = { "phone": id };
 
         // delete
-        const volDeleted = await db.collection("volunteers").findOne(query);
+        const volDeleted = await db.collection("volunteers").deleteOne(query);
         console.log("I found in Delete:",volDeleted);
         if (volDeleted === null) {
             return res.status(409).send({ message: 'ID to delete does not exists.' });
         }
-        // everything is correct
-        const results = await db.collection("volunteers").deleteOne(query);
+        // // everything is correct
+        //const results = await db.collection("volunteers").deleteOne(query);
         res.status(200).send({ message: 'Volunteer deleted successfully' });
     }
     catch (error){
@@ -247,7 +246,7 @@ app.delete("/deleteVol/:_id", async (req, res) => {
 });
 
 //delete application by id
-app.delete("/deleteApp/:_id", async (req, res) => {
+app.delete("/deleteApp/:id", async (req, res) => {
     try {
         const id = Number(req.params._id);
         console.log("Product to delete :",id);
@@ -257,13 +256,13 @@ app.delete("/deleteApp/:_id", async (req, res) => {
         const query = { id: id };
 
         // delete
-        const appDeleted = await db.collection("adoptions").findOne(query);
+        const appDeleted = await db.collection("adoptions").deleteOne(query);
         console.log("I found in Delete:",appDeleted);
         if (appDeleted === null) {
             return res.status(409).send({ message: 'ID to delete does not exists.' });
         }
         // everything is correct
-        const results = await db.collection("adoptions").deleteOne(query);
+        // const results = await db.collection("adoptions").deleteOne(query);
         res.status(200).send({ message: 'Application deleted successfully' });
     }
     catch (error){

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.css"; 
+
 
 function MyAccount() {
   const [volunteers, setVolunteers] = useState([]);
@@ -32,7 +34,7 @@ function MyAccount() {
   const handleDeleteVolunteer = async (id) => {
     try {
       await axios.delete(`http://localhost:8082/deleteVol/${id}`);
-      setVolunteers(volunteers.filter(volunteer => volunteer.id !== id));
+      setVolunteers(volunteers.filter(volunteer => volunteer.phone !== id));
       alert('Volunteer form deleted successfully!');
     } catch (error) {
       console.error('Error deleting volunteer form:', error);
@@ -42,7 +44,7 @@ function MyAccount() {
   const handleDeleteAdoption = async (id) => {
     try {
       await axios.delete(`http://localhost:8082/deleteApp/${id}`);
-      setAdoptions(adoptions.filter(adoption => adoption.id !== id));
+      setAdoptions(adoptions.filter(adoption => adoption.phone !== id));
       alert('Adoption form deleted successfully!');
     } catch (error) {
       console.error('Error deleting adoption form:', error);
@@ -55,18 +57,18 @@ function MyAccount() {
       <h3>Volunteer Forms</h3>
       <ul>
         {volunteers.map(volunteer => (
-          <li key={volunteer.id}>
-            {volunteer.firstName} {volunteer.lastName}
-            <button onClick={() => handleDeleteVolunteer(volunteer.id)}>Delete</button>
+          <li key={volunteer._id}>
+            {volunteer.firstName} {volunteer.lastName}  
+            <button className="btn btn-danger" onClick={() => handleDeleteVolunteer(volunteer.phone)}> Delete</button>
           </li>
         ))}
       </ul>
       <h3>Adoption Forms</h3>
       <ul>
         {adoptions.map(adoption => (
-          <li key={adoption.id}>
+          <li key={adoption._id}>
             {adoption.firstName} {adoption.lastName}
-            <button onClick={() => handleDeleteAdoption(adoption.id)}>Delete</button>
+            <button className="btn btn-dark" onClick={() => handleDeleteAdoption(adoption.phone)}> Delete</button>
           </li>
         ))}
       </ul>
